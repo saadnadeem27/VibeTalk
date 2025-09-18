@@ -33,8 +33,8 @@ class GroupMemberModel {
       ),
       joinedAt: (data['joinedAt'] as Timestamp).toDate(),
       isOnline: data['isOnline'] ?? false,
-      lastSeen: data['lastSeen'] != null 
-          ? (data['lastSeen'] as Timestamp).toDate() 
+      lastSeen: data['lastSeen'] != null
+          ? (data['lastSeen'] as Timestamp).toDate()
           : null,
     );
   }
@@ -116,14 +116,14 @@ class GroupModel {
       groupPhoto: data['groupPhoto'],
       createdBy: data['createdBy'] ?? '',
       createdAt: (data['createdAt'] as Timestamp).toDate(),
-      updatedAt: data['updatedAt'] != null 
-          ? (data['updatedAt'] as Timestamp).toDate() 
+      updatedAt: data['updatedAt'] != null
+          ? (data['updatedAt'] as Timestamp).toDate()
           : null,
       members: [], // Members loaded separately for performance
       lastMessageId: data['lastMessageId'],
       lastMessage: data['lastMessage'],
-      lastMessageTime: data['lastMessageTime'] != null 
-          ? (data['lastMessageTime'] as Timestamp).toDate() 
+      lastMessageTime: data['lastMessageTime'] != null
+          ? (data['lastMessageTime'] as Timestamp).toDate()
           : null,
       lastMessageSenderId: data['lastMessageSenderId'],
       memberCount: data['memberCount'] ?? 0,
@@ -142,9 +142,8 @@ class GroupModel {
       'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
       'lastMessageId': lastMessageId,
       'lastMessage': lastMessage,
-      'lastMessageTime': lastMessageTime != null 
-          ? Timestamp.fromDate(lastMessageTime!) 
-          : null,
+      'lastMessageTime':
+          lastMessageTime != null ? Timestamp.fromDate(lastMessageTime!) : null,
       'lastMessageSenderId': lastMessageSenderId,
       'memberCount': memberCount,
       'isActive': isActive,
@@ -190,18 +189,21 @@ class GroupModel {
 
   // Helper methods
   bool isUserAdmin(String userId) {
-    return members.any((member) => 
+    return members.any((member) =>
         member.userId == userId && member.role == GroupMemberRole.admin);
   }
 
   bool isUserModerator(String userId) {
-    return members.any((member) => 
-        member.userId == userId && 
-        (member.role == GroupMemberRole.admin || member.role == GroupMemberRole.moderator));
+    return members.any((member) =>
+        member.userId == userId &&
+        (member.role == GroupMemberRole.admin ||
+            member.role == GroupMemberRole.moderator));
   }
 
   List<GroupMemberModel> get admins {
-    return members.where((member) => member.role == GroupMemberRole.admin).toList();
+    return members
+        .where((member) => member.role == GroupMemberRole.admin)
+        .toList();
   }
 
   List<GroupMemberModel> get onlineMembers {

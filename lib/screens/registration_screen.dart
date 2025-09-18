@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flash_chat/app/controllers/auth_controller.dart';
 import 'package:flash_chat/app/theme/app_theme.dart';
-import 'package:flash_chat/app/routes/app_routes.dart';
+import 'package:flash_chat/screens/login_screen.dart';
 
 class RegistrationScreen extends StatelessWidget {
   static const String id = 'registration_screen';
+
+  const RegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,29 +16,29 @@ class RegistrationScreen extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: VibeTalkColors.backgroundGradient,
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            padding: EdgeInsets.all(VibeTalkSpacing.lg),
+            padding: const EdgeInsets.all(VibeTalkSpacing.lg),
             child: Column(
               children: [
                 // Header with back button and logo
                 _buildHeader(),
-                
-                SizedBox(height: VibeTalkSpacing.xl),
-                
+
+                const SizedBox(height: VibeTalkSpacing.xl),
+
                 // Welcome text
                 _buildWelcomeText(),
-                
-                SizedBox(height: VibeTalkSpacing.xl),
-                
+
+                const SizedBox(height: VibeTalkSpacing.xl),
+
                 // Registration form
                 _buildRegistrationForm(authController),
-                
-                SizedBox(height: VibeTalkSpacing.lg),
-                
+
+                const SizedBox(height: VibeTalkSpacing.lg),
+
                 // Sign in link
                 _buildSignInLink(),
               ],
@@ -52,17 +54,14 @@ class RegistrationScreen extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () => Get.back(),
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: VibeTalkColors.textPrimary,
           ),
-        )
-            .animate()
-            .fadeIn()
-            .slideX(begin: -0.3, end: 0),
-        
-        Spacer(),
-        
+        ).animate().fadeIn().slideX(begin: -0.3, end: 0),
+
+        const Spacer(),
+
         // Mini logo
         Hero(
           tag: 'logo',
@@ -73,19 +72,17 @@ class RegistrationScreen extends StatelessWidget {
               gradient: VibeTalkColors.primaryGradient,
               borderRadius: BorderRadius.circular(VibeTalkRadius.md),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.chat_bubble_rounded,
               size: 25,
               color: VibeTalkColors.onPrimary,
             ),
           ),
-        )
-            .animate()
-            .scale(delay: Duration(milliseconds: 200)),
-        
-        Spacer(),
-        
-        SizedBox(width: 48), // Balance the back button
+        ).animate().scale(delay: const Duration(milliseconds: 200)),
+
+        const Spacer(),
+
+        const SizedBox(width: 48), // Balance the back button
       ],
     );
   }
@@ -96,23 +93,21 @@ class RegistrationScreen extends StatelessWidget {
         Text(
           'Create Account',
           style: Theme.of(Get.context!).textTheme.displayMedium!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+                fontWeight: FontWeight.bold,
+              ),
         )
             .animate()
-            .fadeIn(delay: Duration(milliseconds: 300))
+            .fadeIn(delay: const Duration(milliseconds: 300))
             .slideY(begin: 0.3, end: 0),
-        
-        SizedBox(height: VibeTalkSpacing.sm),
-        
+        const SizedBox(height: VibeTalkSpacing.sm),
         Text(
           'Join VibeTalk and start connecting',
           style: Theme.of(Get.context!).textTheme.bodyLarge!.copyWith(
-            color: VibeTalkColors.textSecondary,
-          ),
+                color: VibeTalkColors.textSecondary,
+              ),
         )
             .animate()
-            .fadeIn(delay: Duration(milliseconds: 400))
+            .fadeIn(delay: const Duration(milliseconds: 400))
             .slideY(begin: 0.2, end: 0),
       ],
     );
@@ -127,7 +122,7 @@ class RegistrationScreen extends StatelessWidget {
           TextFormField(
             controller: authController.displayNameController,
             validator: authController.validateDisplayName,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Full Name',
               prefixIcon: Icon(
                 Icons.person_outlined,
@@ -136,17 +131,17 @@ class RegistrationScreen extends StatelessWidget {
             ),
           )
               .animate()
-              .fadeIn(delay: Duration(milliseconds: 500))
+              .fadeIn(delay: const Duration(milliseconds: 500))
               .slideX(begin: -0.3, end: 0),
-          
-          SizedBox(height: VibeTalkSpacing.lg),
-          
+
+          const SizedBox(height: VibeTalkSpacing.lg),
+
           // Email field
           TextFormField(
             controller: authController.emailController,
             validator: authController.validateEmail,
             keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Email',
               prefixIcon: Icon(
                 Icons.email_outlined,
@@ -155,70 +150,71 @@ class RegistrationScreen extends StatelessWidget {
             ),
           )
               .animate()
-              .fadeIn(delay: Duration(milliseconds: 600))
+              .fadeIn(delay: const Duration(milliseconds: 600))
               .slideX(begin: -0.3, end: 0),
-          
-          SizedBox(height: VibeTalkSpacing.lg),
-          
+
+          const SizedBox(height: VibeTalkSpacing.lg),
+
           // Password field
           Obx(() => TextFormField(
-            controller: authController.passwordController,
-            validator: authController.validatePassword,
-            obscureText: !authController.isPasswordVisible.value,
-            decoration: InputDecoration(
-              labelText: 'Password',
-              prefixIcon: Icon(
-                Icons.lock_outlined,
-                color: VibeTalkColors.primaryColor,
-              ),
-              suffixIcon: IconButton(
-                onPressed: authController.togglePasswordVisibility,
-                icon: Icon(
-                  authController.isPasswordVisible.value
-                      ? Icons.visibility_off
-                      : Icons.visibility,
-                  color: VibeTalkColors.textSecondary,
-                ),
-              ),
-            ),
-          ))
+                    controller: authController.passwordController,
+                    validator: authController.validatePassword,
+                    obscureText: !authController.isPasswordVisible.value,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      prefixIcon: const Icon(
+                        Icons.lock_outlined,
+                        color: VibeTalkColors.primaryColor,
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: authController.togglePasswordVisibility,
+                        icon: Icon(
+                          authController.isPasswordVisible.value
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: VibeTalkColors.textSecondary,
+                        ),
+                      ),
+                    ),
+                  ))
               .animate()
-              .fadeIn(delay: Duration(milliseconds: 700))
+              .fadeIn(delay: const Duration(milliseconds: 700))
               .slideX(begin: -0.3, end: 0),
-          
-          SizedBox(height: VibeTalkSpacing.lg),
-          
+
+          const SizedBox(height: VibeTalkSpacing.lg),
+
           // Confirm Password field
           Obx(() => TextFormField(
-            controller: authController.confirmPasswordController,
-            validator: authController.validateConfirmPassword,
-            obscureText: !authController.isConfirmPasswordVisible.value,
-            decoration: InputDecoration(
-              labelText: 'Confirm Password',
-              prefixIcon: Icon(
-                Icons.lock_outlined,
-                color: VibeTalkColors.primaryColor,
-              ),
-              suffixIcon: IconButton(
-                onPressed: authController.toggleConfirmPasswordVisibility,
-                icon: Icon(
-                  authController.isConfirmPasswordVisible.value
-                      ? Icons.visibility_off
-                      : Icons.visibility,
-                  color: VibeTalkColors.textSecondary,
-                ),
-              ),
-            ),
-          ))
+                    controller: authController.confirmPasswordController,
+                    validator: authController.validateConfirmPassword,
+                    obscureText: !authController.isConfirmPasswordVisible.value,
+                    decoration: InputDecoration(
+                      labelText: 'Confirm Password',
+                      prefixIcon: const Icon(
+                        Icons.lock_outlined,
+                        color: VibeTalkColors.primaryColor,
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed:
+                            authController.toggleConfirmPasswordVisibility,
+                        icon: Icon(
+                          authController.isConfirmPasswordVisible.value
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: VibeTalkColors.textSecondary,
+                        ),
+                      ),
+                    ),
+                  ))
               .animate()
-              .fadeIn(delay: Duration(milliseconds: 800))
+              .fadeIn(delay: const Duration(milliseconds: 800))
               .slideX(begin: -0.3, end: 0),
-          
-          SizedBox(height: VibeTalkSpacing.xl),
-          
+
+          const SizedBox(height: VibeTalkSpacing.xl),
+
           // Terms and conditions
           Container(
-            padding: EdgeInsets.all(VibeTalkSpacing.md),
+            padding: const EdgeInsets.all(VibeTalkSpacing.md),
             decoration: BoxDecoration(
               color: VibeTalkColors.surface.withOpacity(0.5),
               borderRadius: BorderRadius.circular(VibeTalkRadius.md),
@@ -226,57 +222,57 @@ class RegistrationScreen extends StatelessWidget {
             child: Text(
               'By creating an account, you agree to our Terms of Service and Privacy Policy.',
               style: Theme.of(Get.context!).textTheme.bodySmall!.copyWith(
-                color: VibeTalkColors.textSecondary,
-              ),
+                    color: VibeTalkColors.textSecondary,
+                  ),
               textAlign: TextAlign.center,
             ),
-          )
-              .animate()
-              .fadeIn(delay: Duration(milliseconds: 900)),
-          
-          SizedBox(height: VibeTalkSpacing.lg),
-          
+          ).animate().fadeIn(delay: const Duration(milliseconds: 900)),
+
+          const SizedBox(height: VibeTalkSpacing.lg),
+
           // Register button
           Obx(() => SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: ElevatedButton(
-              onPressed: authController.isSignUpLoading.value 
-                  ? null 
-                  : authController.signUp,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: VibeTalkColors.primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(VibeTalkRadius.lg),
-                ),
-                elevation: 8,
-                shadowColor: VibeTalkColors.primaryColor.withOpacity(0.3),
-              ),
-              child: authController.isSignUpLoading.value
-                  ? SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: VibeTalkColors.onPrimary,
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: authController.isSignUpLoading.value
+                          ? null
+                          : authController.signUp,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: VibeTalkColors.primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(VibeTalkRadius.lg),
+                        ),
+                        elevation: 8,
+                        shadowColor:
+                            VibeTalkColors.primaryColor.withOpacity(0.3),
                       ),
-                    )
-                  : Text(
-                      'Create Account',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1,
-                      ),
+                      child: authController.isSignUpLoading.value
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: VibeTalkColors.onPrimary,
+                              ),
+                            )
+                          : const Text(
+                              'Create Account',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 1,
+                              ),
+                            ),
                     ),
-            ),
-          ))
+                  ))
               .animate()
-              .fadeIn(delay: Duration(milliseconds: 1000))
-              .scale(begin: Offset(0.8, 0.8), end: Offset(1, 1))
+              .fadeIn(delay: const Duration(milliseconds: 1000))
+              .scale(begin: const Offset(0.8, 0.8), end: const Offset(1, 1))
               .shimmer(
-                delay: Duration(milliseconds: 1500),
-                duration: Duration(milliseconds: 1000),
+                delay: const Duration(milliseconds: 1500),
+                duration: const Duration(milliseconds: 1000),
               ),
         ],
       ),
@@ -292,8 +288,8 @@ class RegistrationScreen extends StatelessWidget {
           style: Theme.of(Get.context!).textTheme.bodyMedium,
         ),
         TextButton(
-          onPressed: () => Get.toNamed(AppRoutes.login),
-          child: Text(
+          onPressed: () => Get.to(() => LoginScreen()),
+          child: const Text(
             'Sign In',
             style: TextStyle(
               color: VibeTalkColors.primaryColor,
@@ -302,8 +298,6 @@ class RegistrationScreen extends StatelessWidget {
           ),
         ),
       ],
-    )
-        .animate()
-        .fadeIn(delay: Duration(milliseconds: 1100));
+    ).animate().fadeIn(delay: const Duration(milliseconds: 1100));
   }
 }

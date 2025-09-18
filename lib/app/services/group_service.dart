@@ -61,7 +61,8 @@ class GroupService extends GetxService {
 
       // Add other members
       for (String memberId in memberIds) {
-        final userDoc = await _firestore.collection('users').doc(memberId).get();
+        final userDoc =
+            await _firestore.collection('users').doc(memberId).get();
         if (userDoc.exists) {
           final userData = userDoc.data() as Map<String, dynamic>;
           await addGroupMember(
@@ -155,9 +156,11 @@ class GroupService extends GetxService {
 
       // Send system message
       if (userId == currentUserId) {
-        await sendSystemMessage(groupId: groupId, message: 'Someone left the group');
+        await sendSystemMessage(
+            groupId: groupId, message: 'Someone left the group');
       } else {
-        await sendSystemMessage(groupId: groupId, message: 'Someone was removed from the group');
+        await sendSystemMessage(
+            groupId: groupId, message: 'Someone was removed from the group');
       }
 
       return true;
@@ -208,11 +211,12 @@ class GroupService extends GetxService {
       // Verify invite code (implementation depends on your invite system)
       // For now, we'll assume any user can join any group
 
-      final userDoc = await _firestore.collection('users').doc(currentUser.uid).get();
+      final userDoc =
+          await _firestore.collection('users').doc(currentUser.uid).get();
       if (!userDoc.exists) throw Exception('User data not found');
 
       final userData = userDoc.data() as Map<String, dynamic>;
-      
+
       await addGroupMember(
         groupId: groupId,
         userId: currentUser.uid,
@@ -305,8 +309,8 @@ class GroupService extends GetxService {
       if (!memberDoc.exists) return false;
 
       final memberData = GroupMemberModel.fromFirestore(memberDoc);
-      return memberData.role == GroupMemberRole.admin || 
-             memberData.role == GroupMemberRole.moderator;
+      return memberData.role == GroupMemberRole.admin ||
+          memberData.role == GroupMemberRole.moderator;
     } catch (e) {
       return false;
     }
@@ -326,8 +330,9 @@ class GroupService extends GetxService {
       List<GroupModel> groups = [];
       for (var membership in groupMemberships.docs) {
         final groupId = membership.reference.parent.parent!.id;
-        final groupDoc = await _firestore.collection('groups').doc(groupId).get();
-        
+        final groupDoc =
+            await _firestore.collection('groups').doc(groupId).get();
+
         if (groupDoc.exists && (groupDoc.data()?['isActive'] ?? true)) {
           groups.add(GroupModel.fromFirestore(groupDoc));
         }
@@ -443,6 +448,65 @@ class GroupService extends GetxService {
       return true;
     } catch (e) {
       Get.snackbar('Error', 'Failed to delete group: $e');
+      return false;
+    }
+  }
+
+  // Get group messages stream
+  Stream<List<MessageModel>> getGroupMessages(String groupId) {
+    return _firestore
+        .collection('groups')
+        .doc(groupId)
+        .collection('messages')
+        .orderBy('timestamp', descending: false)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => MessageModel.fromFirestore(doc))
+            .toList());
+  }
+
+  // Send group message
+  Future<bool> sendGroupMessage({
+    required String groupId,
+    required String content,
+    required String senderId,
+    required String senderName,
+    MessageType type = MessageType.text,
+    String? mediaUrl,
+  }) async {
+    try {
+      final messageDoc = _firestore
+          .collection('groups')
+          .doc(groupId)
+          .collection('messages')
+          .doc();
+
+      final message = MessageModel(
+        id: messageDoc.id,
+        chatId: groupId,
+        senderId: senderId,
+        senderName: senderName,
+        content: content,
+        type: type,
+        timestamp: DateTime.now(),
+        isGroupMessage: true,
+        groupId: groupId,
+        mediaUrl: mediaUrl,
+      );
+
+      await messageDoc.set(message.toFirestore());
+
+      // Update group's last message
+      await _firestore.collection('groups').doc(groupId).update({
+        'lastMessage': content,
+        'lastMessageTime': Timestamp.fromDate(DateTime.now()),
+        'lastMessageSenderId': senderId,
+        'updatedAt': Timestamp.fromDate(DateTime.now()),
+      });
+
+      return true;
+    } catch (e) {
+      print('Error sending group message: $e');
       return false;
     }
   }

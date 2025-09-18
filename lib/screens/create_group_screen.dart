@@ -30,27 +30,28 @@ class CreateGroupScreen extends StatelessWidget {
         ),
         actions: [
           Obx(() => TextButton(
-            onPressed: groupController.isCreatingGroup.value
-                ? null
-                : () => groupController.createGroup(),
-            child: groupController.isCreatingGroup.value
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  )
-                : const Text(
-                    'Create',
-                    style: TextStyle(
-                      color: VibeTalkColors.primaryColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-          )),
+                onPressed: groupController.isCreatingGroup.value
+                    ? null
+                    : () => groupController.createGroup(),
+                child: groupController.isCreatingGroup.value
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      )
+                    : const Text(
+                        'Create',
+                        style: TextStyle(
+                          color: VibeTalkColors.primaryColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+              )),
         ],
       ),
       body: SafeArea(
@@ -80,13 +81,14 @@ class CreateGroupScreen extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                ).animate()
-                  .scale(duration: const Duration(milliseconds: 600))
-                  .fadeIn(duration: const Duration(milliseconds: 600)),
+                )
+                    .animate()
+                    .scale(duration: const Duration(milliseconds: 600))
+                    .fadeIn(duration: const Duration(milliseconds: 600)),
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               Center(
                 child: Text(
                   'Tap to add group photo',
@@ -106,9 +108,10 @@ class CreateGroupScreen extends StatelessWidget {
                 hint: 'Enter group name',
                 icon: Icons.group,
                 maxLength: 50,
-              ).animate()
-                .slideX(duration: const Duration(milliseconds: 500))
-                .fadeIn(duration: const Duration(milliseconds: 500)),
+              )
+                  .animate()
+                  .slideX(duration: const Duration(milliseconds: 500))
+                  .fadeIn(duration: const Duration(milliseconds: 500)),
 
               const SizedBox(height: 20),
 
@@ -120,21 +123,22 @@ class CreateGroupScreen extends StatelessWidget {
                 icon: Icons.description,
                 maxLines: 3,
                 maxLength: 200,
-              ).animate()
-                .slideX(
-                  begin: -0.3,
-                  duration: const Duration(milliseconds: 500),
-                  delay: const Duration(milliseconds: 100),
-                )
-                .fadeIn(
-                  duration: const Duration(milliseconds: 500),
-                  delay: const Duration(milliseconds: 100),
-                ),
+              )
+                  .animate()
+                  .slideX(
+                    begin: -0.3,
+                    duration: const Duration(milliseconds: 500),
+                    delay: const Duration(milliseconds: 100),
+                  )
+                  .fadeIn(
+                    duration: const Duration(milliseconds: 500),
+                    delay: const Duration(milliseconds: 100),
+                  ),
 
               const SizedBox(height: 24),
 
               // Member Selection Section
-              Text(
+              const Text(
                 'Add Members',
                 style: TextStyle(
                   color: Colors.white,
@@ -180,7 +184,8 @@ class CreateGroupScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: VibeTalkColors.surface,
             borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: VibeTalkColors.primaryColor.withOpacity(0.3)),
+            border:
+                Border.all(color: VibeTalkColors.primaryColor.withOpacity(0.3)),
           ),
           child: TextField(
             controller: controller,
@@ -240,7 +245,7 @@ class CreateGroupScreen extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.group,
                         size: 16,
                         color: VibeTalkColors.primaryColor,
@@ -248,7 +253,7 @@ class CreateGroupScreen extends StatelessWidget {
                       const SizedBox(width: 6),
                       Text(
                         '${groupController.selectedMembers.length} members selected',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: VibeTalkColors.primaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
@@ -258,7 +263,7 @@ class CreateGroupScreen extends StatelessWidget {
                   ),
                 )
               : const SizedBox()),
-          
+
           // Member List
           ListView.builder(
             shrinkWrap: true,
@@ -267,40 +272,42 @@ class CreateGroupScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final member = mockMembers[index];
               final memberId = member['id'] as String;
-              
+
               return Obx(() => ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: VibeTalkColors.primaryColor,
-                  child: Text(
-                    (member['name'] as String)[0].toUpperCase(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                    leading: CircleAvatar(
+                      backgroundColor: VibeTalkColors.primaryColor,
+                      child: Text(
+                        (member['name'] as String)[0].toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                title: Text(
-                  member['name'] as String,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                subtitle: Text(
-                  member['email'] as String,
-                  style: TextStyle(
-                    color: Colors.grey[400],
-                    fontSize: 12,
-                  ),
-                ),
-                trailing: Checkbox(
-                  value: groupController.isUserSelected(memberId),
-                  onChanged: (value) => groupController.toggleMemberSelection(memberId),
-                  activeColor: VibeTalkColors.primaryColor,
-                  checkColor: Colors.white,
-                ),
-                onTap: () => groupController.toggleMemberSelection(memberId),
-              ));
+                    title: Text(
+                      member['name'] as String,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    subtitle: Text(
+                      member['email'] as String,
+                      style: TextStyle(
+                        color: Colors.grey[400],
+                        fontSize: 12,
+                      ),
+                    ),
+                    trailing: Checkbox(
+                      value: groupController.isUserSelected(memberId),
+                      onChanged: (value) =>
+                          groupController.toggleMemberSelection(memberId),
+                      activeColor: VibeTalkColors.primaryColor,
+                      checkColor: Colors.white,
+                    ),
+                    onTap: () =>
+                        groupController.toggleMemberSelection(memberId),
+                  ));
             },
           ),
         ],
@@ -356,7 +363,8 @@ class CreateGroupScreen extends StatelessWidget {
                   label: 'Gallery',
                   onTap: () {
                     Get.back();
-                    Get.snackbar('Info', 'Gallery selection will be implemented');
+                    Get.snackbar(
+                        'Info', 'Gallery selection will be implemented');
                   },
                 ),
                 _buildImagePickerOption(

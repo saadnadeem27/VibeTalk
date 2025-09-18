@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:flash_chat/app/theme/app_theme.dart';
 import 'package:flash_chat/app/services/auth_service.dart';
 import 'package:flash_chat/app/services/group_service.dart';
+import 'package:flash_chat/app/services/chat_service.dart';
 import 'package:flash_chat/app/controllers/auth_controller.dart';
 import 'package:flash_chat/app/controllers/group_controller.dart';
+import 'package:flash_chat/app/controllers/chat_controller.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flash_chat/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,8 +21,10 @@ void main() async {
 
   // Initialize services
   Get.put(AuthService());
+  Get.put(ChatService());
   Get.put(GroupService());
   Get.put(AuthController());
+  Get.put(ChatController());
   Get.put(GroupController());
 
   runApp(const VibeTalk());
@@ -57,7 +61,7 @@ class AuthWrapper extends StatelessWidget {
             ),
           );
         }
-        
+
         if (snapshot.hasData) {
           return const HomeScreen();
         } else {

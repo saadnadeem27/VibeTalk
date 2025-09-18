@@ -228,4 +228,30 @@ class ChatController extends GetxController {
       return '${time.day}/${time.month}/${time.year}';
     }
   }
+
+  // Create a demo chat for testing
+  Future<void> createDemoChat() async {
+    try {
+      final currentUser = _authService.user.value;
+      if (currentUser == null) return;
+
+      // Create a demo chat with a fake user ID
+      final demoChatId =
+          await _chatService.createOrGetIndividualChat('demo_user_12345');
+
+      // Send a demo message
+      await _chatService.sendMessage(
+        chatId: demoChatId,
+        content:
+            'Hello! This is a demo chat to test VibeTalk functionality. 🎉',
+        type: MessageType.text,
+      );
+
+      // Refresh chat list
+      loadChats();
+    } catch (e) {
+      print('Error creating demo chat: $e');
+      rethrow;
+    }
+  }
 }

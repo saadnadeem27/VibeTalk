@@ -16,7 +16,8 @@ class GroupController extends GetxController {
 
   // Group creation form
   final TextEditingController groupNameController = TextEditingController();
-  final TextEditingController groupDescriptionController = TextEditingController();
+  final TextEditingController groupDescriptionController =
+      TextEditingController();
   RxList<String> selectedMembers = <String>[].obs;
   RxString groupPhotoPath = ''.obs;
 
@@ -71,7 +72,8 @@ class GroupController extends GetxController {
         name: groupNameController.text.trim(),
         description: groupDescriptionController.text.trim(),
         memberIds: selectedMembers.toList(),
-        groupPhoto: groupPhotoPath.value.isNotEmpty ? groupPhotoPath.value : null,
+        groupPhoto:
+            groupPhotoPath.value.isNotEmpty ? groupPhotoPath.value : null,
         groupSettings: groupSettings,
       );
 
@@ -80,7 +82,7 @@ class GroupController extends GetxController {
         clearCreateGroupForm();
         Get.back(); // Close create group screen
         Get.snackbar('Success', 'Group created successfully!');
-        
+
         // Navigate to group chat
         // Get.to(() => GroupChatScreen(groupId: groupId));
       }
@@ -159,7 +161,8 @@ class GroupController extends GetxController {
       if (currentUserId == null) return;
 
       // Check if user can add members
-      final canAdd = await _groupService.canManageMembers(groupId, currentUserId);
+      final canAdd =
+          await _groupService.canManageMembers(groupId, currentUserId);
       if (!canAdd) {
         Get.snackbar('Error', 'You don\'t have permission to add members');
         return;
@@ -189,7 +192,8 @@ class GroupController extends GetxController {
     final confirm = await Get.dialog<bool>(
       AlertDialog(
         title: const Text('Remove Member'),
-        content: Text('Are you sure you want to remove $memberName from this group?'),
+        content: Text(
+            'Are you sure you want to remove $memberName from this group?'),
         actions: [
           TextButton(
             onPressed: () => Get.back(result: false),
@@ -230,9 +234,12 @@ class GroupController extends GetxController {
     required GroupMemberRole newRole,
     required String memberName,
   }) async {
-    final roleText = newRole == GroupMemberRole.admin ? 'admin' : 
-                     newRole == GroupMemberRole.moderator ? 'moderator' : 'member';
-    
+    final roleText = newRole == GroupMemberRole.admin
+        ? 'admin'
+        : newRole == GroupMemberRole.moderator
+            ? 'moderator'
+            : 'member';
+
     final confirm = await Get.dialog<bool>(
       AlertDialog(
         title: const Text('Change Role'),
@@ -321,7 +328,8 @@ class GroupController extends GetxController {
     final confirm = await Get.dialog<bool>(
       AlertDialog(
         title: const Text('Delete Group'),
-        content: const Text('Are you sure you want to delete this group? This action cannot be undone.'),
+        content: const Text(
+            'Are you sure you want to delete this group? This action cannot be undone.'),
         actions: [
           TextButton(
             onPressed: () => Get.back(result: false),
@@ -397,14 +405,14 @@ class GroupController extends GetxController {
   bool isCurrentUserAdmin(String groupId) {
     final currentUserId = _authService.user.value?.uid;
     if (currentUserId == null) return false;
-    
+
     return currentGroup.value?.isUserAdmin(currentUserId) ?? false;
   }
 
   bool isCurrentUserModerator(String groupId) {
     final currentUserId = _authService.user.value?.uid;
     if (currentUserId == null) return false;
-    
+
     return currentGroup.value?.isUserModerator(currentUserId) ?? false;
   }
 
@@ -416,15 +424,20 @@ class GroupController extends GetxController {
     if (searchQuery.value.isEmpty) {
       return groupMembers.toList();
     }
-    return groupMembers.where((member) =>
-        member.displayName.toLowerCase().contains(searchQuery.value.toLowerCase())
-    ).toList();
+    return groupMembers
+        .where((member) => member.displayName
+            .toLowerCase()
+            .contains(searchQuery.value.toLowerCase()))
+        .toList();
   }
 
   void _updateGroupSettingsFromData(Map<String, dynamic> settings) {
-    allowMembersToAddOthers.value = settings['allowMembersToAddOthers'] ?? false;
-    allowMembersToChangeGroupInfo.value = settings['allowMembersToChangeGroupInfo'] ?? false;
-    allowMembersToSendMessages.value = settings['allowMembersToSendMessages'] ?? true;
+    allowMembersToAddOthers.value =
+        settings['allowMembersToAddOthers'] ?? false;
+    allowMembersToChangeGroupInfo.value =
+        settings['allowMembersToChangeGroupInfo'] ?? false;
+    allowMembersToSendMessages.value =
+        settings['allowMembersToSendMessages'] ?? true;
     allowMembersToSendMedia.value = settings['allowMembersToSendMedia'] ?? true;
     muteNewMembers.value = settings['muteNewMembers'] ?? false;
     requireAdminApproval.value = settings['requireAdminApproval'] ?? false;
