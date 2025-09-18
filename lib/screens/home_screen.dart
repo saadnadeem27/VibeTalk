@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flash_chat/app/controllers/chat_controller.dart';
@@ -220,47 +221,77 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   // Modern Tab Bar
   Widget _buildModernTabBar() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1D29),
-        borderRadius: BorderRadius.circular(25),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
-      ),
-      child: TabBar(
-        controller: _tabController,
-        indicator: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF6C5CE7), Color(0xFF74B9FF)],
+    // Glassmorphism pill container
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(28),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+            // decoration: BoxDecoration(
+            //   color: Colors.white.withOpacity(0.03), // subtle translucent base
+            //   borderRadius: BorderRadius.circular(28),
+            //   border: Border.all(color: Colors.white.withOpacity(0.03)),
+            // ),
+            child: Material(
+              color: Colors.transparent,
+              child: TabBar(
+                controller: _tabController,
+                indicator: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF6C5CE7), Color(0xFF74B9FF)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF6C5CE7).withOpacity(0.12),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                // ensure the indicator is comfortably inset
+                indicatorPadding:
+                    const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                indicatorSize: TabBarIndicatorSize.tab,
+                overlayColor: WidgetStateProperty.all(Colors.transparent),
+                labelPadding: const EdgeInsets.symmetric(horizontal: 12),
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.white.withOpacity(0.6),
+                labelStyle:
+                    const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                unselectedLabelStyle:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                tabs: const [
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.chat_bubble_outline, size: 18),
+                        SizedBox(width: 8),
+                        Text('Chats'),
+                      ],
+                    ),
+                  ),
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.group_outlined, size: 18),
+                        SizedBox(width: 8),
+                        Text('Groups'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          borderRadius: BorderRadius.circular(25),
         ),
-        labelColor: Colors.white,
-        unselectedLabelColor: Colors.white.withOpacity(0.6),
-        labelStyle: const TextStyle(fontWeight: FontWeight.w600),
-        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w400),
-        tabs: const [
-          Tab(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.chat_bubble_outline, size: 18),
-                SizedBox(width: 8),
-                Text('Chats'),
-              ],
-            ),
-          ),
-          Tab(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.group_outlined, size: 18),
-                SizedBox(width: 8),
-                Text('Groups'),
-              ],
-            ),
-          ),
-        ],
       ),
     ).animate().fadeIn().slideY(begin: -0.2, end: 0);
   }
