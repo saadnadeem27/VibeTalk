@@ -1,16 +1,20 @@
 buildscript {
-    // Bumped Kotlin version to meet Flutter's minimum supported Kotlin (>= 1.7.0).
-    // 1.8.22 is a stable, compatible choice for recent Flutter/AGP versions.
-    ext.kotlin_version = '1.8.22'
+    // Kotlin updated to a modern 1.9.x release to match newer Firebase/Kotlin
+    // libraries pulled in as transitive dependencies.
+    ext.kotlin_version = '1.9.22'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        // Updated Android Gradle Plugin to a version compatible with newer
-        // AndroidX libraries and compileSdk 34.
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        // START: FlutterFire Configuration
+        classpath 'com.google.gms:google-services:4.3.15'
+        // END: FlutterFire Configuration
+        // Android Gradle Plugin bumped to a modern 8.x release to work with
+        // newer Kotlin and Firebase artifacts. Keep this in sync with
+        // the Gradle wrapper version in gradle/wrapper/gradle-wrapper.properties.
+        classpath 'com.android.tools.build:gradle:8.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }

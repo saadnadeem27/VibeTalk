@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "31376412526",
+    "project_id": "vibetalk-daf10",
+    "storage_bucket": "vibetalk-daf10.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31376412526:android:50defff277d84f7817bb7f",
+        "android_client_info": {
+          "package_name": "com.example.flash_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2XlBF4_sp5V_wnS_Tw7wRCKImmMHyMuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

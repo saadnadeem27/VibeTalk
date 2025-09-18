@@ -22,10 +22,15 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
+// START: FlutterFire Configuration
+apply plugin: 'com.google.gms.google-services'
+// END: FlutterFire Configuration
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+    // Namespace required by AGP 7.0+ / 8.x. Keep it in sync with applicationId.
+    namespace 'com.example.flash_chat'
     // Use a compileSdkVersion compatible with the AndroidX libraries in use.
     // Updated to 34 because several dependencies require compileSdk >= 34.
     compileSdkVersion 34
@@ -33,12 +38,16 @@ android {
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        // Use Java 17 to match modern Kotlin/AGP; AGP 8+ supports Java 17 toolchain.
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        // Enable core library desugaring for newer library support on older devices.
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        // Match jvm target with Java toolchain
+        jvmTarget = '17'
     }
 
     sourceSets {
@@ -50,7 +59,7 @@ android {
         applicationId "com.example.flash_chat"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-    minSdkVersion flutter.minSdkVersion
+    minSdkVersion 23
     targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -70,5 +79,7 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Core library desugaring for backporting Java 8+ APIs (and parts of Kotlin stdlib)
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.3"
 }
