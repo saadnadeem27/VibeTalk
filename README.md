@@ -7,7 +7,7 @@
 
 VibeTalk is a **production-ready**, modern chat application built with Flutter and Firebase. It demonstrates enterprise-level architecture with clean code principles, real-time messaging, and a polished UI featuring glassmorphism effects and gradient design patterns. Perfect for portfolio showcase or as a foundation for commercial chat applications.
 
----
+<!-- ---
 
 ## 🚀 Live Demo
 
@@ -16,7 +16,7 @@ VibeTalk is a **production-ready**, modern chat application built with Flutter a
 **Key Screenshots to Include:**
 - Home screen with glassmorphism TabBar and modern chat cards
 - Group chat with real-time messaging and message bubbles
-- Profile/Settings screens with dark theme consistency
+- Profile/Settings screens with dark theme consistency -->
 
 ---
 
@@ -316,7 +316,7 @@ class GroupService extends GetxService {
 
 ---
 
-## 📞 Contact & Portfolio
+<!-- ## 📞 Contact & Portfolio
 
 **Saad Nadeem** — Flutter Developer  
 📧 Email: [saad@example.com](mailto:saad@example.com)  
@@ -325,7 +325,7 @@ class GroupService extends GetxService {
 
 **Project Repository**: [VibeTalk - Flutter Chat App](https://github.com/saadnadeem27/flash_chat)
 
----
+--- -->
 
 ## 📄 License
 
