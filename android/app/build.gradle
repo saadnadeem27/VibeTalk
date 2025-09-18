@@ -26,7 +26,10 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    // Use a compileSdkVersion compatible with the AndroidX libraries in use.
+    // Updated to 34 because several dependencies require compileSdk >= 34.
+    compileSdkVersion 34
+    // If you want to pin a specific NDK, keep flutter.ndkVersion; otherwise it can be omitted.
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -47,8 +50,8 @@ android {
         applicationId "com.example.flash_chat"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+    minSdkVersion flutter.minSdkVersion
+    targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

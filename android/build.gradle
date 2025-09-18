@@ -1,12 +1,16 @@
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    // Bumped Kotlin version to meet Flutter's minimum supported Kotlin (>= 1.7.0).
+    // 1.8.22 is a stable, compatible choice for recent Flutter/AGP versions.
+    ext.kotlin_version = '1.8.22'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
+        // Updated Android Gradle Plugin to a version compatible with newer
+        // AndroidX libraries and compileSdk 34.
+        classpath 'com.android.tools.build:gradle:7.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
