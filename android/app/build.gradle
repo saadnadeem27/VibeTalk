@@ -32,8 +32,8 @@ android {
     // Namespace required by AGP 7.0+ / 8.x. Keep it in sync with applicationId.
     namespace 'com.example.flash_chat'
     // Use a compileSdkVersion compatible with the AndroidX libraries in use.
-    // Updated to 34 because several dependencies require compileSdk >= 34.
-    compileSdkVersion 34
+    // Updated to 35 because several dependencies require compileSdk >= 35.
+    compileSdkVersion 35
     // If you want to pin a specific NDK, keep flutter.ndkVersion; otherwise it can be omitted.
     ndkVersion flutter.ndkVersion
 
